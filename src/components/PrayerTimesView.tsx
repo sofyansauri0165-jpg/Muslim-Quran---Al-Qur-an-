@@ -141,7 +141,7 @@ export const PrayerTimesView: React.FC = () => {
   return (
     <div className="space-y-8 max-w-5xl mx-auto py-2">
       {/* City & Date selector bar */}
-      <div className="bg-white dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 sm:p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 sm:p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1">
             <Clock className="w-4 h-4" />
@@ -280,7 +280,7 @@ export const PrayerTimesView: React.FC = () => {
                 className={`p-4 rounded-2xl border transition-all text-center flex flex-col justify-between ${
                   isNext
                     ? 'bg-emerald-600 text-white border-emerald-500 shadow-md ring-2 ring-emerald-400/40'
-                    : 'bg-white dark:bg-stone-850 border-stone-200 dark:border-stone-800 text-stone-900 dark:text-stone-100 shadow-xs hover:border-emerald-500/40'
+                    : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 text-stone-900 dark:text-stone-100 shadow-xs hover:border-emerald-500/40'
                 }`}
               >
                 <div>
@@ -331,7 +331,7 @@ export const PrayerTimesView: React.FC = () => {
       </div>
 
       {/* Qibla Direction & Prayer Guidance Card */}
-      <div className="bg-stone-100 dark:bg-stone-850/60 border border-stone-200 dark:border-stone-800 rounded-2xl p-5 sm:p-6 text-stone-700 dark:text-stone-300 text-xs space-y-3">
+      <div className="bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-5 sm:p-6 text-stone-700 dark:text-stone-300 text-xs space-y-3">
         <div className="flex items-center gap-2 font-semibold text-stone-900 dark:text-stone-100 text-sm">
           <Compass className="w-4 h-4 text-emerald-600" />
           <span>Arah Kiblat & Ketepatan Jam Sholat</span>

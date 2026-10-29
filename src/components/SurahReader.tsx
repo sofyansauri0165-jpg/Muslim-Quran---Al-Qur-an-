@@ -361,7 +361,7 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
               className={`p-5 sm:p-6 rounded-2xl border transition-all duration-200 ${
                 isCurrentActiveAyah
                   ? 'bg-emerald-50/70 dark:bg-emerald-950/40 border-emerald-400 dark:border-emerald-600 shadow-sm ring-1 ring-emerald-400/50'
-                  : 'bg-white dark:bg-stone-850/80 border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700'
+                  : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 hover:border-stone-300 dark:hover:border-stone-700'
               }`}
             >
               {/* Header bar of Ayah: Number badge and verse action buttons */}
@@ -468,11 +468,11 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
               {/* Arabic Text */}
               <div className="py-5 text-right" dir="rtl">
                 <p
-                  className="font-arabic text-stone-900 dark:text-stone-100 leading-loose"
+                  className="font-arabic text-stone-900 dark:text-white leading-loose font-normal"
                   style={{ fontSize: `${arabicFontSize}px` }}
                 >
                   {ayah.teksArab}
-                  <span className="inline-block mr-2 text-emerald-700 dark:text-emerald-400 font-mono text-sm opacity-80 select-none">
+                  <span className="inline-block mr-2 text-emerald-700 dark:text-emerald-300 font-mono text-sm opacity-90 select-none">
                     ﴿{ayah.nomorAyat}﴾
                   </span>
                 </p>
@@ -480,14 +480,14 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
 
               {/* Latin Transliteration */}
               {showLatin && (
-                <div className="pt-2 pb-1 text-sm text-stone-600 dark:text-stone-300 italic font-sans leading-relaxed">
+                <div className="pt-2 pb-1 text-sm text-stone-700 dark:text-emerald-300/95 italic font-sans leading-relaxed">
                   {ayah.teksLatin}
                 </div>
               )}
 
               {/* Indonesian Translation */}
               {showTranslation && (
-                <div className="pt-2 text-sm text-stone-800 dark:text-stone-200 leading-relaxed">
+                <div className="pt-2 text-sm text-stone-800 dark:text-stone-100 leading-relaxed font-normal">
                   {ayah.teksIndonesia}
                 </div>
               )}

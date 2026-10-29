@@ -90,7 +90,7 @@ export const BookmarksDrawer: React.FC<BookmarksDrawerProps> = ({
                 {bookmarks.map((b) => (
                   <div
                     key={b.id}
-                    className="p-3.5 bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-xl space-y-2 hover:border-emerald-500/50 transition-colors"
+                    className="p-3.5 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl space-y-2 hover:border-emerald-500/50 transition-colors"
                   >
                     <div className="flex items-center justify-between">
                       <button

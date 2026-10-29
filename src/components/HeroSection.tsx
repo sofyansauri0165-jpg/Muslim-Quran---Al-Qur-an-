@@ -1,6 +1,6 @@
 import React from 'react';
-import { Search, Sparkles, BookOpen, Clock, Volume2 } from 'lucide-react';
-import { LastRead } from '../types/quran';
+import { Search, Sparkles, BookOpen, Clock, Volume2, Compass, Calendar } from 'lucide-react';
+import { LastRead, AppTab } from '../types/quran';
 
 interface HeroSectionProps {
   searchQuery: string;
@@ -9,6 +9,7 @@ interface HeroSectionProps {
   lastRead: LastRead | null;
   onOpenLastRead: () => void;
   onOpenPrayerTimes?: () => void;
+  onNavigateTab?: (tab: AppTab) => void;
 }
 
 export const HeroSection: React.FC<HeroSectionProps> = ({
@@ -17,7 +18,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onSelectSurah,
   lastRead,
   onOpenLastRead,
-  onOpenPrayerTimes
+  onOpenPrayerTimes,
+  onNavigateTab
 }) => {
   return (
     <section className="relative overflow-hidden bg-stone-900 text-stone-100 rounded-2xl sm:rounded-3xl shadow-xl my-6 border border-stone-800">
@@ -121,11 +123,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           {onOpenPrayerTimes && (
             <button
               onClick={onOpenPrayerTimes}
-              className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/30 rounded-lg transition-colors font-medium"
+              className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/30 rounded-lg transition-colors font-medium cursor-pointer"
             >
               <Clock className="w-3.5 h-3.5 text-amber-300" />
-              <span>Jam Sholat & Azan</span>
+              <span>Jadwal Sholat</span>
             </button>
+          )}
+
+          {onNavigateTab && (
+            <>
+              <button
+                onClick={() => onNavigateTab('kiblat')}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 rounded-lg transition-colors font-medium cursor-pointer"
+              >
+                <Compass className="w-3.5 h-3.5 text-emerald-300" />
+                <span>Arah Kiblat</span>
+              </button>
+
+              <button
+                onClick={() => onNavigateTab('kalender')}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-teal-500/20 hover:bg-teal-500/30 text-teal-200 border border-teal-400/30 rounded-lg transition-colors font-medium cursor-pointer"
+              >
+                <Calendar className="w-3.5 h-3.5 text-teal-300" />
+                <span>Kalender Hijriah</span>
+              </button>
+            </>
           )}
 
           {lastRead && (

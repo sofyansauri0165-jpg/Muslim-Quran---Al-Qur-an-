@@ -2,6 +2,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-stone-750: #332e2b;
+  --color-stone-850: #201c1a;
+}
+
 @layer base {
   :root {
     --font-arabic: 'Amiri', 'Scheherazade New', 'Traditional Arabic', serif;
@@ -10,6 +15,13 @@
 
   html.dark {
     color-scheme: dark;
+    background-color: #1c1917;
+    color: #f5f5f4;
+  }
+
+  html.dark body {
+    background-color: #1c1917;
+    color: #f5f5f4;
   }
 
   body {
@@ -20,6 +32,11 @@
 .font-arabic {
   font-family: var(--font-arabic);
   line-height: 2.2;
+}
+
+/* High contrast dark mode typography support */
+html.dark .font-arabic {
+  color: #fdfcf9;
 }
 
 /* Custom scrollbar for clean reading experience */
@@ -63,4 +80,24 @@ html.theme-sepia .bg-stone-50 {
 
 html.theme-sepia .bg-stone-100 {
   background-color: #ede4d3 !important;
+}
+
+/* Continuous Logo Marquee / Running Slide */
+@keyframes logoMarqueeSlide {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-running-logos {
+  display: flex;
+  width: max-content;
+  animation: logoMarqueeSlide 18s linear infinite;
+}
+
+.animate-running-logos:hover {
+  animation-play-state: paused;
 }

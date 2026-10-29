@@ -67,7 +67,7 @@ export const TasbihDigitalView: React.FC = () => {
   return (
     <div className="max-w-md mx-auto py-4 space-y-6">
       {/* Dhikr Selector Bar */}
-      <div className="bg-white dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 shadow-xs">
+      <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-4 shadow-xs">
         <label className="text-xs font-semibold text-stone-600 dark:text-stone-400 block mb-2">
           Pilih Kalimat Dzikir:
         </label>

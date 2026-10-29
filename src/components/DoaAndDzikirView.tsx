@@ -113,7 +113,7 @@ export const DoaAndDzikirView: React.FC = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari doa (contoh: makan, tidur, masjid, orang tua)..."
-                className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-stone-850 border border-stone-200 dark:border-stone-700 rounded-xl text-stone-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
+                className="w-full pl-9 pr-4 py-2 text-xs bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-700 rounded-xl text-stone-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-emerald-500"
               />
             </div>
 
@@ -143,7 +143,7 @@ export const DoaAndDzikirView: React.FC = () => {
               return (
                 <div
                   key={doa.id}
-                  className="bg-white dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-xl p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-500/50 transition-colors"
+                  className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-5 shadow-xs flex flex-col justify-between space-y-4 hover:border-emerald-500/50 transition-colors"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-2 border-b border-stone-100 dark:border-stone-800 pb-2 mb-3">
@@ -202,7 +202,7 @@ export const DoaAndDzikirView: React.FC = () => {
       {/* Mode B: Dzikir Pagi / Petang Interactive Counter */}
       {(subTab === 'pagi' || subTab === 'petang') && (
         <div className="space-y-6">
-          <div className="bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-2xl p-5 flex items-center justify-between">
+          <div className="bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-5 flex items-center justify-between">
             <div>
               <h3 className="text-base font-bold text-stone-900 dark:text-white">
                 {subTab === 'pagi' ? 'Al-Ma’tsurat Dzikir Pagi' : 'Al-Ma’tsurat Dzikir Petang'}
@@ -233,7 +233,7 @@ export const DoaAndDzikirView: React.FC = () => {
                   className={`p-6 rounded-2xl border transition-all cursor-pointer select-none ${
                     isCompleted
                       ? 'bg-emerald-50/60 dark:bg-emerald-950/30 border-emerald-400 dark:border-emerald-600/80 shadow-xs'
-                      : 'bg-white dark:bg-stone-850 border-stone-200 dark:border-stone-800 hover:border-emerald-300 dark:hover:border-emerald-700'
+                      : 'bg-white dark:bg-stone-900 border-stone-200 dark:border-stone-800 hover:border-emerald-300 dark:hover:border-emerald-700'
                   }`}
                 >
                   <div className="flex items-center justify-between pb-3 border-b border-stone-100 dark:border-stone-800">

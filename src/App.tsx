@@ -15,7 +15,7 @@ import {
   INDONESIAN_CITIES,
   getNextPrayer
 } from './services/prayerTimes';
-import { Ayah, Bookmark, LastRead, SurahDetail, SurahSummary, TafsirDetail } from './types/quran';
+import { Ayah, Bookmark, LastRead, SurahDetail, SurahSummary, TafsirDetail, AppTab } from './types/quran';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { SurahList } from './components/SurahList';
@@ -23,6 +23,8 @@ import { SurahReader } from './components/SurahReader';
 import { TafsirModal } from './components/TafsirModal';
 import { AudioPlayerBar } from './components/AudioPlayerBar';
 import { PrayerTimesView } from './components/PrayerTimesView';
+import { QiblaCompassView } from './components/QiblaCompassView';
+import { IslamicCalendarView } from './components/IslamicCalendarView';
 import { DoaAndDzikirView } from './components/DoaAndDzikirView';
 import { AsmaulHusnaView } from './components/AsmaulHusnaView';
 import { TasbihDigitalView } from './components/TasbihDigitalView';
@@ -34,7 +36,7 @@ import { Footer } from './components/Footer';
 
 export default function App() {
   // Navigation & Theme
-  const [activeTab, setActiveTab] = useState<'quran' | 'sholat' | 'doa' | 'asmaul' | 'tasbih'>('quran');
+  const [activeTab, setActiveTab] = useState<AppTab>('quran');
   const [themeMode, setThemeMode] = useState<'light' | 'dark' | 'sepia'>(() => {
     return (localStorage.getItem('mq_theme') as 'light' | 'dark' | 'sepia') || 'light';
   });
@@ -365,6 +367,11 @@ export default function App() {
                   lastRead={lastRead}
                   onOpenLastRead={handleOpenLastRead}
                   onOpenPrayerTimes={() => setActiveTab('sholat')}
+                  onNavigateTab={(tab) => {
+                    setActiveTab(tab);
+                    if (tab !== 'quran') setSelectedSurahNumber(null);
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                 />
                 <SurahList
                   surahs={surahs}
@@ -420,13 +427,19 @@ export default function App() {
         {/* Tab 2: Jadwal Sholat */}
         {activeTab === 'sholat' && <PrayerTimesView />}
 
-        {/* Tab 3: Doa & Dzikir */}
+        {/* Tab 3: Arah Kiblat */}
+        {activeTab === 'kiblat' && <QiblaCompassView />}
+
+        {/* Tab 4: Kalender Hijriah & Hari Besar */}
+        {activeTab === 'kalender' && <IslamicCalendarView />}
+
+        {/* Tab 5: Doa & Dzikir */}
         {activeTab === 'doa' && <DoaAndDzikirView />}
 
-        {/* Tab 4: Asmaul Husna */}
+        {/* Tab 6: Asmaul Husna */}
         {activeTab === 'asmaul' && <AsmaulHusnaView />}
 
-        {/* Tab 5: Tasbih Digital */}
+        {/* Tab 7: Tasbih Digital */}
         {activeTab === 'tasbih' && <TasbihDigitalView />}
       </main>
 

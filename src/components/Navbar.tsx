@@ -1,10 +1,10 @@
 import React from 'react';
-import { BookOpen, Bookmark, Moon, Sun, Compass, Clock, Volume2 } from 'lucide-react';
-import { LastRead } from '../types/quran';
+import { BookOpen, Bookmark, Moon, Sun, Compass, Clock, Volume2, Calendar } from 'lucide-react';
+import { LastRead, AppTab } from '../types/quran';
 
 interface NavbarProps {
-  activeTab: 'quran' | 'sholat' | 'doa' | 'asmaul' | 'tasbih';
-  setActiveTab: (tab: 'quran' | 'sholat' | 'doa' | 'asmaul' | 'tasbih') => void;
+  activeTab: AppTab;
+  setActiveTab: (tab: AppTab) => void;
   isDarkMode: boolean;
   setIsDarkMode: (val: boolean | ((prev: boolean) => boolean)) => void;
   themeMode: 'light' | 'dark' | 'sepia';
@@ -17,6 +17,24 @@ interface NavbarProps {
   nextPrayerName?: string;
   nextPrayerTime?: string;
 }
+
+const THREE_LOGOS = [
+  {
+    id: 1,
+    src: '/assets/aistudio/IMG_3980_d2d7f416.png',
+    title: 'Mushaf Al-Qur’an'
+  },
+  {
+    id: 2,
+    src: '/assets/aistudio/IMG_3981_1a1a1424.png',
+    title: 'Standar Kemenag'
+  },
+  {
+    id: 3,
+    src: '/assets/aistudio/IMG_3982_5c3cd058.png',
+    title: 'Al-Qur’an Digital'
+  }
+];
 
 export const Navbar: React.FC<NavbarProps> = ({
   activeTab,
@@ -31,26 +49,76 @@ export const Navbar: React.FC<NavbarProps> = ({
   nextPrayerName,
   nextPrayerTime
 }) => {
+  const [currentLogoIdx, setCurrentLogoIdx] = React.useState<number>(0);
+
+  // Auto-slide running every 2.5 seconds
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentLogoIdx((prev) => (prev + 1) % THREE_LOGOS.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 w-full backdrop-blur-md transition-colors border-b border-stone-200/80 dark:border-stone-800 bg-white/90 dark:bg-stone-900/90 shadow-2xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
+    <header className="sticky top-0 z-40 w-full backdrop-blur-md transition-colors border-b border-stone-200/80 dark:border-stone-800 bg-white/95 dark:bg-stone-900/95 shadow-2xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[68px] py-2 flex items-center justify-between gap-6">
         {/* Zone 1: Brand Wordmark */}
-        <button
-          onClick={() => setActiveTab('quran')}
-          className="flex items-center gap-2.5 text-left group whitespace-nowrap shrink-0 focus:outline-none"
-        >
-          <img
-            src="/assets/aistudio/IMG_3954_7eb1552b.png"
-            alt="Muslim Quran Logo"
-            className="w-9 h-9 rounded-xl object-contain shadow-xs group-hover:scale-105 transition-transform"
-            referrerPolicy="no-referrer"
-          />
-          <div className="leading-tight">
-            <span className="text-lg font-bold tracking-tight text-stone-900 dark:text-stone-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-              Muslim Quran
-            </span>
-          </div>
-        </button>
+        <div className="flex items-center gap-2.5 text-left shrink-0">
+          <button
+            onClick={() => setActiveTab('quran')}
+            className="flex items-center gap-2.5 text-left group whitespace-nowrap shrink-0 focus:outline-none cursor-pointer"
+          >
+            <img
+              src="/assets/aistudio/IMG_3954_7eb1552b.png"
+              alt="Muslim Quran Logo"
+              className="w-10 h-10 rounded-xl object-contain shadow-xs group-hover:scale-105 transition-transform"
+              referrerPolicy="no-referrer"
+            />
+            <div className="leading-tight flex flex-col justify-center">
+              <span className="text-base sm:text-lg font-bold tracking-tight text-stone-900 dark:text-stone-100 group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
+                Muslim Quran
+              </span>
+
+              {/* Slide Berjalan Otomatis 3 Logo di Bawah Nama Muslim Quran */}
+              <div className="relative overflow-hidden h-5 w-36 sm:w-44 mt-0.5 bg-stone-100/90 dark:bg-stone-800/90 rounded-md border border-stone-200/80 dark:border-stone-700/80 px-1.5 py-0.5 shadow-2xs">
+                <div
+                  className="flex items-center transition-transform duration-500 ease-in-out h-full"
+                  style={{ transform: `translateX(-${currentLogoIdx * 100}%)` }}
+                >
+                  {THREE_LOGOS.map((logo) => (
+                    <div
+                      key={logo.id}
+                      className="w-full shrink-0 flex items-center gap-1.5 h-full"
+                    >
+                      <img
+                        src={logo.src}
+                        alt={logo.title}
+                        className="h-3.5 w-auto max-w-[20px] object-contain rounded-xs"
+                      />
+                      <span className="text-[10px] font-semibold text-emerald-700 dark:text-emerald-400 truncate leading-none">
+                        {logo.title}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Indicator Dots */}
+              <div className="flex items-center gap-1 mt-0.5">
+                {THREE_LOGOS.map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-0.5 rounded-full transition-all duration-300 ${
+                      i === currentLogoIdx
+                        ? 'w-3 bg-emerald-600 dark:bg-emerald-400'
+                        : 'w-1 bg-stone-300 dark:bg-stone-600'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </button>
+        </div>
 
         {/* Zone 2: Clean 4–5 single-line navigation links */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -72,7 +140,29 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
             }`}
           >
-            Jam Sholat & Azan
+            Jadwal Sholat
+          </button>
+          <button
+            onClick={() => setActiveTab('kiblat')}
+            className={`whitespace-nowrap shrink-0 transition-colors py-1 flex items-center gap-1.5 ${
+              activeTab === 'kiblat'
+                ? 'text-emerald-700 dark:text-emerald-400 font-semibold border-b-2 border-emerald-600'
+                : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
+            }`}
+          >
+            <Compass className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Arah Kiblat</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('kalender')}
+            className={`whitespace-nowrap shrink-0 transition-colors py-1 flex items-center gap-1.5 ${
+              activeTab === 'kalender'
+                ? 'text-emerald-700 dark:text-emerald-400 font-semibold border-b-2 border-emerald-600'
+                : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
+            }`}
+          >
+            <Calendar className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Kalender</span>
           </button>
           <button
             onClick={() => setActiveTab('doa')}
@@ -102,7 +192,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
             }`}
           >
-            Tasbih Digital
+            Tasbih
           </button>
         </nav>
 
@@ -192,6 +282,34 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Moon className="w-3.5 h-3.5 text-amber-300" />
               <span className="hidden sm:inline text-[11px]">Gelap</span>
             </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Running Logo Slide Bar (Slide Berjalan Otomatis 3 Logo di Bawah Nama Muslim Quran) */}
+      <div className="w-full bg-emerald-50/60 dark:bg-stone-950/60 border-t border-stone-200/50 dark:border-stone-800/60 py-1 px-4 overflow-hidden shadow-2xs">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <div className="flex items-center gap-1.5 shrink-0 text-[10px] font-bold text-emerald-800 dark:text-emerald-300 uppercase tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Muslim Quran</span>
+          </div>
+          {/* Continuous Running Marquee of the 3 Logos */}
+          <div className="flex-1 overflow-hidden relative">
+            <div className="animate-running-logos flex items-center gap-8 py-0.5">
+              {[...THREE_LOGOS, ...THREE_LOGOS, ...THREE_LOGOS, ...THREE_LOGOS].map((logo, index) => (
+                <div key={index} className="flex items-center gap-2 shrink-0">
+                  <img
+                    src={logo.src}
+                    alt={logo.title}
+                    className="h-4.5 w-auto max-w-[36px] object-contain drop-shadow-2xs"
+                  />
+                  <span className="text-[11px] font-semibold text-stone-700 dark:text-stone-300 whitespace-nowrap">
+                    {logo.title}
+                  </span>
+                  <span className="text-emerald-500 dark:text-emerald-400 text-xs font-bold">✦</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

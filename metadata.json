@@ -1,6 +1,6 @@
 {
   "name": "Remix Muslim Quran - Al-Qur\u0027an",
-  "description": "Aplikasi Al-Qur\u0027an digital modern terlengkap dengan 114 surat, terjemahan Kemenag RI, transliterasi latin, audio murottal 6 qari terkemuka, tafsir, jadwal sholat, asmaul husna, doa harian, dan tasbih digital.",
+  "description": "Aplikasi Al-Qur\u0027an digital modern terlengkap dengan 114 surat, terjemahan Kemenag RI, transliterasi latin, audio murottal 6 qari terkemuka, tafsir, jadwal sholat, kompas arah kiblat presisi, kalender Hijriah, asmaul husna, doa harian, dan tasbih digital.",
   "requestFramePermissions": [
     "geolocation"
   ],

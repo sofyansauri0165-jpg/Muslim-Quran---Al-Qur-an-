@@ -19,7 +19,7 @@ export const AsmaulHusnaView: React.FC = () => {
   return (
     <div className="space-y-6 max-w-5xl mx-auto py-2">
       {/* Header banner */}
-      <div className="bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-2xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div className="bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl p-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-1">
             <Sparkles className="w-4 h-4" />
@@ -51,7 +51,7 @@ export const AsmaulHusnaView: React.FC = () => {
         {filteredItems.map((item) => (
           <div
             key={item.urutan}
-            className="bg-white dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-xl p-5 shadow-xs hover:border-emerald-500/60 transition-all flex flex-col justify-between space-y-4"
+            className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl p-5 shadow-xs hover:border-emerald-500/60 transition-all flex flex-col justify-between space-y-4"
           >
             <div className="flex items-start justify-between gap-3">
               <span className="w-8 h-8 rounded-lg bg-stone-100 dark:bg-stone-800 border border-stone-200 dark:border-stone-700 flex items-center justify-center font-mono font-bold text-emerald-700 dark:text-emerald-400 text-xs shrink-0">
@@ -69,10 +69,10 @@ export const AsmaulHusnaView: React.FC = () => {
               <h3 className="text-base font-bold text-stone-900 dark:text-stone-100">
                 {item.latin}
               </h3>
-              <p className="text-xs font-medium text-emerald-700 dark:text-emerald-400 mt-0.5">
+              <p className="text-xs font-semibold text-emerald-700 dark:text-emerald-300 mt-0.5">
                 {item.arti}
               </p>
-              <p className="text-[11px] text-stone-500 dark:text-stone-400 mt-2 leading-relaxed">
+              <p className="text-[11px] text-stone-500 dark:text-stone-300 mt-2 leading-relaxed">
                 {item.keterangan}
               </p>
             </div>

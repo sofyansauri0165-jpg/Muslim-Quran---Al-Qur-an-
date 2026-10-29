@@ -123,7 +123,7 @@ export const AdhanAudioPlayerModal: React.FC<AdhanAudioPlayerModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/75 backdrop-blur-xs animate-in fade-in duration-200">
       <div className="bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl w-full max-w-2xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between bg-stone-50 dark:bg-stone-850">
+        <div className="p-4 sm:p-5 border-b border-stone-200 dark:border-stone-800 flex items-center justify-between bg-stone-50 dark:bg-stone-900">
           <div className="flex items-center gap-2.5">
             <div className="w-9 h-9 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs">
               <Headphones className="w-5 h-5 text-amber-200" />
@@ -244,7 +244,7 @@ export const AdhanAudioPlayerModal: React.FC<AdhanAudioPlayerModalProps> = ({
         </div>
 
         {/* Content Navigation: Lafadz Azan vs Doa Sesudah Azan */}
-        <div className="flex items-center border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-850 px-4 text-xs font-semibold">
+        <div className="flex items-center border-b border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 px-4 text-xs font-semibold">
           <button
             onClick={() => setActiveTab('teks')}
             className={`py-3 px-4 border-b-2 transition-colors ${
@@ -278,7 +278,7 @@ export const AdhanAudioPlayerModal: React.FC<AdhanAudioPlayerModalProps> = ({
               {ADHAN_TEXTS.map((line, idx) => (
                 <div
                   key={idx}
-                  className="p-3.5 bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-xl space-y-2"
+                  className="p-3.5 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl space-y-2"
                 >
                   <div className="flex items-center justify-between text-xs font-semibold text-emerald-700 dark:text-emerald-400">
                     <span>Lafadz Muadzin</span>
@@ -311,7 +311,7 @@ export const AdhanAudioPlayerModal: React.FC<AdhanAudioPlayerModalProps> = ({
             </div>
           ) : (
             <div className="space-y-4">
-              <div className="p-5 bg-stone-50 dark:bg-stone-850 border border-stone-200 dark:border-stone-800 rounded-2xl space-y-3">
+              <div className="p-5 bg-stone-50 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-2xl space-y-3">
                 <div className="flex items-center gap-2 text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
                   <Sparkles className="w-4 h-4" />
                   <span>Doa Setelah Mendengar Azan</span>
@@ -342,7 +342,7 @@ export const AdhanAudioPlayerModal: React.FC<AdhanAudioPlayerModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-3 border-t border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-850 flex justify-end">
+        <div className="p-3 border-t border-stone-200 dark:border-stone-800 bg-stone-50 dark:bg-stone-900 flex justify-end">
           <button
             onClick={() => {
               if (audioRef.current) audioRef.current.pause();
