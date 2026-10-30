@@ -23,25 +23,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   return (
     <section className="relative overflow-hidden bg-stone-900 text-stone-100 rounded-2xl sm:rounded-3xl shadow-xl my-6 border border-stone-800">
-      {/* Background Hero Image with measured scrim */}
+      {/* Background Hero Image of Madinah (Masjid Nabawi) */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/src/assets/images/quran_hero_banner_1793286095889.jpg"
-          alt="Al-Qur'an dan suasana arsitektur Islami yang tenang"
-          className="w-full h-full object-cover object-center brightness-60"
+          src="/src/assets/images/madinah_nabawi_hero_1793347282794.jpg"
+          alt="Al-Masjid an-Nabawi Madinah Al-Munawwarah pada waktu senja yang agung"
+          className="w-full h-full object-cover object-center brightness-[0.62]"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/90 via-stone-900/80 to-transparent"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-stone-950/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-stone-950/95 via-stone-950/75 to-stone-950/30"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-stone-950/50"></div>
       </div>
 
       <div className="relative z-10 p-6 sm:p-10 lg:p-12 max-w-4xl">
-        {/* Subtle kicker */}
-        <div className="flex items-center gap-2 text-xs font-semibold tracking-wider uppercase text-emerald-400 mb-3">
-          <span>Mushaf Digital Nusantara</span>
-          <span aria-hidden="true">·</span>
-          <span>Standar Kemenag RI</span>
-          <span aria-hidden="true">·</span>
+        {/* Subtle kicker with Madinah reference */}
+        <div className="flex flex-wrap items-center gap-2 text-xs font-semibold tracking-wider uppercase text-emerald-400 mb-3">
+          <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-950/70 border border-emerald-500/30 text-emerald-300">
+            🕌 Al-Madinah Al-Munawwarah
+          </span>
+          <span aria-hidden="true" className="text-stone-500">·</span>
+          <span>Mushaf Digital Kemenag RI</span>
+          <span aria-hidden="true" className="text-stone-500">·</span>
           <span>114 Surat & 6236 Ayat</span>
         </div>
 
@@ -132,6 +134,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
           {onNavigateTab && (
             <>
+              <button
+                onClick={() => onNavigateTab('tajwid')}
+                className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500/20 hover:bg-amber-500/30 text-amber-200 border border-amber-400/30 rounded-lg transition-colors font-medium cursor-pointer"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                <span>Ilmu Tajwid</span>
+              </button>
+
               <button
                 onClick={() => onNavigateTab('kiblat')}
                 className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 rounded-lg transition-colors font-medium cursor-pointer"

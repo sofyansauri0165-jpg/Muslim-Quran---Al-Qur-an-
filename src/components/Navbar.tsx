@@ -1,6 +1,7 @@
-import React from 'react';
-import { BookOpen, Bookmark, Moon, Sun, Compass, Clock, Volume2, Calendar } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, Bookmark, Moon, Sun, Compass, Clock, Volume2, Calendar, Sparkles, Heart } from 'lucide-react';
 import { LastRead, AppTab } from '../types/quran';
+import { PWAInstallButton } from './PWAInstallButton';
 
 interface NavbarProps {
   activeTab: AppTab;
@@ -16,6 +17,9 @@ interface NavbarProps {
   onOpenAdhanModal?: () => void;
   nextPrayerName?: string;
   nextPrayerTime?: string;
+  onOpenInstallModal?: () => void;
+  isInstalled?: boolean;
+  isStandalone?: boolean;
 }
 
 const THREE_LOGOS = [
@@ -47,7 +51,10 @@ export const Navbar: React.FC<NavbarProps> = ({
   bookmarksCount,
   onOpenAdhanModal,
   nextPrayerName,
-  nextPrayerTime
+  nextPrayerTime,
+  onOpenInstallModal,
+  isInstalled = false,
+  isStandalone = false,
 }) => {
   const [currentLogoIdx, setCurrentLogoIdx] = React.useState<number>(0);
 
@@ -65,8 +72,9 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Zone 1: Brand Wordmark */}
         <div className="flex items-center gap-2.5 text-left shrink-0">
           <button
-            onClick={() => setActiveTab('quran')}
+            onClick={() => setActiveTab('home')}
             className="flex items-center gap-2.5 text-left group whitespace-nowrap shrink-0 focus:outline-none cursor-pointer"
+            title="Kembali ke Beranda"
           >
             <img
               src="/assets/aistudio/IMG_3954_7eb1552b.png"
@@ -120,8 +128,18 @@ export const Navbar: React.FC<NavbarProps> = ({
           </button>
         </div>
 
-        {/* Zone 2: Clean 4–5 single-line navigation links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        {/* Zone 2: Clean navigation links */}
+        <nav className="hidden md:flex items-center gap-5 text-sm font-medium">
+          <button
+            onClick={() => setActiveTab('home')}
+            className={`whitespace-nowrap shrink-0 transition-colors py-1 ${
+              activeTab === 'home'
+                ? 'text-emerald-700 dark:text-emerald-400 font-semibold border-b-2 border-emerald-600'
+                : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
+            }`}
+          >
+            Beranda
+          </button>
           <button
             onClick={() => setActiveTab('quran')}
             className={`whitespace-nowrap shrink-0 transition-colors py-1 ${
@@ -141,6 +159,39 @@ export const Navbar: React.FC<NavbarProps> = ({
             }`}
           >
             Jadwal Sholat
+          </button>
+          <button
+            onClick={() => setActiveTab('tasbih')}
+            className={`whitespace-nowrap shrink-0 transition-colors py-1 flex items-center gap-1.5 ${
+              activeTab === 'tasbih'
+                ? 'text-emerald-700 dark:text-emerald-400 font-semibold border-b-2 border-emerald-600'
+                : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
+            }`}
+          >
+            <Heart className="w-3.5 h-3.5 text-rose-500" />
+            <span>Tasbih</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('kalender')}
+            className={`whitespace-nowrap shrink-0 transition-colors py-1 flex items-center gap-1.5 ${
+              activeTab === 'kalender'
+                ? 'text-emerald-700 dark:text-emerald-400 font-semibold border-b-2 border-emerald-600'
+                : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
+            }`}
+          >
+            <Calendar className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+            <span>Kalender</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('tajwid')}
+            className={`whitespace-nowrap shrink-0 transition-colors py-1 flex items-center gap-1.5 ${
+              activeTab === 'tajwid'
+                ? 'text-emerald-700 dark:text-emerald-400 font-semibold border-b-2 border-emerald-600'
+                : 'text-stone-600 dark:text-stone-300 hover:text-stone-900 dark:hover:text-white'
+            }`}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
+            <span>Tajwid</span>
           </button>
           <button
             onClick={() => setActiveTab('kiblat')}
@@ -227,6 +278,15 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Compass className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
               <span className="truncate max-w-36">Terakhir: {lastRead.surahName}:{lastRead.ayahNumber}</span>
             </button>
+          )}
+
+          {/* PWA Install Button for Android / iPhone */}
+          {onOpenInstallModal && !isStandalone && (
+            <PWAInstallButton
+              onOpenModal={onOpenInstallModal}
+              isInstalled={isInstalled}
+              isStandalone={isStandalone}
+            />
           )}
 
           {/* Bookmarks toggle button */}

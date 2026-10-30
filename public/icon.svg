@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="pwa-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#047857" />
+      <stop offset="100%" stop-color="#064e3b" />
+    </linearGradient>
+    <linearGradient id="pwa-gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#pwa-bg)" />
+  <circle cx="256" cy="256" r="216" stroke="#10b981" stroke-width="6" stroke-dasharray="12 12" opacity="0.4" />
+  
+  <!-- Crescent & Star -->
+  <path d="M256 120 C290 120 318 135 336 158 C320 152 300 150 280 156 C240 168 214 205 218 247 C222 289 256 321 298 322 C312 322 326 318 338 310 C318 334 288 350 254 350 C198 350 152 304 152 248 C152 178 200 120 256 120 Z" fill="url(#pwa-gold)" />
+  <polygon points="325,188 333,205 352,207 337,220 342,238 325,228 308,238 313,220 298,207 317,205" fill="url(#pwa-gold)" />
+  
+  <!-- Open Quran Book -->
+  <g transform="translate(136, 255) scale(0.47)" fill="none" stroke="url(#pwa-gold)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 256 120 C 180 80 80 90 20 120 L 20 400 C 80 370 180 360 256 400 C 332 360 432 370 492 400 L 492 120 C 432 90 332 80 256 120 Z" fill="#064e3b" fill-opacity="0.9" />
+    <line x1="256" y1="120" x2="256" y2="400" />
+    <path d="M 70 180 C 130 160 190 160 220 180" opacity="0.6" stroke-width="8" />
+    <path d="M 70 230 C 130 210 190 210 220 230" opacity="0.6" stroke-width="8" />
+    <path d="M 70 280 C 130 260 190 260 220 280" opacity="0.6" stroke-width="8" />
+    <path d="M 292 180 C 322 160 382 160 442 180" opacity="0.6" stroke-width="8" />
+    <path d="M 292 230 C 322 210 382 210 442 230" opacity="0.6" stroke-width="8" />
+    <path d="M 292 280 C 322 260 382 260 442 280" opacity="0.6" stroke-width="8" />
+  </g>
+</svg>

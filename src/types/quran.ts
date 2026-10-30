@@ -104,4 +104,4 @@ export interface DailyDoaItem {
   source?: string;
 }
 
-export type AppTab = 'quran' | 'sholat' | 'kiblat' | 'kalender' | 'doa' | 'asmaul' | 'tasbih';
+export type AppTab = 'home' | 'quran' | 'sholat' | 'tajwid' | 'kiblat' | 'kalender' | 'doa' | 'asmaul' | 'tasbih';

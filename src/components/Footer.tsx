@@ -1,8 +1,10 @@
 import React from 'react';
 import { BookOpen } from 'lucide-react';
 
+import { AppTab } from '../types/quran';
+
 interface FooterProps {
-  onSelectTab: (tab: 'quran' | 'sholat' | 'doa' | 'asmaul' | 'tasbih') => void;
+  onSelectTab: (tab: AppTab) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
@@ -24,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
               </span>
             </div>
             <p className="text-xs text-stone-500 dark:text-stone-400 max-w-md leading-relaxed">
-              Platform Al-Qur'an digital dan pendamping ibadah harian berstandar Kementerian Agama Republik Indonesia dengan audio murottal, jadwal sholat akurat, serta doa harian.
+              Platform Al-Qur'an digital dan pendamping ibadah harian berstandar Kementerian Agama Republik Indonesia dengan audio murottal, panduan tajwid, jadwal sholat akurat, serta doa harian.
             </p>
           </div>
 
@@ -36,10 +38,28 @@ export const Footer: React.FC<FooterProps> = ({ onSelectTab }) => {
               Al-Qur'an
             </button>
             <button
+              onClick={() => onSelectTab('tajwid')}
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Ilmu Tajwid
+            </button>
+            <button
               onClick={() => onSelectTab('sholat')}
               className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
             >
               Jam Sholat & Azan
+            </button>
+            <button
+              onClick={() => onSelectTab('kiblat')}
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Kompas Kiblat
+            </button>
+            <button
+              onClick={() => onSelectTab('kalender')}
+              className="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors"
+            >
+              Kalender Islam
             </button>
             <button
               onClick={() => onSelectTab('doa')}

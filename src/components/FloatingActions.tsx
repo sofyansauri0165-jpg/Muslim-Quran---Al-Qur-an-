@@ -12,7 +12,8 @@ import {
   Move,
   RotateCcw,
   Compass,
-  Calendar
+  Calendar,
+  Sparkles
 } from 'lucide-react';
 import { LastRead, AppTab } from '../types/quran';
 
@@ -367,6 +368,22 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
                 <Compass className="w-4 h-4" />
               </div>
               <div className="flex-1 truncate">Kompas Kiblat</div>
+            </button>
+
+            {/* Action: Belajar Tajwid */}
+            <button
+              onClick={() => {
+                onNavigateTab('tajwid');
+                setIsOpen(false);
+              }}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-stone-800 dark:text-stone-100 hover:bg-emerald-50 dark:hover:bg-stone-800 transition-colors text-xs font-semibold group cursor-pointer ${
+                isDockedLeft ? 'flex-row' : 'flex-row-reverse text-right'
+              }`}
+            >
+              <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-950/80 text-amber-700 dark:text-amber-400 flex items-center justify-center shrink-0 shadow-xs">
+                <Sparkles className="w-4 h-4" />
+              </div>
+              <div className="flex-1 truncate">Belajar Tajwid</div>
             </button>
 
             {/* Action: Kalender Hijriah & Hari Besar */}

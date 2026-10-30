@@ -14,9 +14,15 @@ import {
   ChevronRight,
   Headphones,
   Compass,
-  Volume2
+  Volume2,
+  Sparkles,
+  Info,
+  Palette
 } from 'lucide-react';
 import { Ayah, RECITERS, Reciter, SurahDetail } from '../types/quran';
+import { renderTajwidColoredText, TAJWID_COLOR_LEGEND } from '../utils/tajwidColorizer';
+import { TajwidLegendModal } from './TajwidLegendModal';
+import { getJuzForAyah } from '../data/juzData';
 
 interface SurahReaderProps {
   surah: SurahDetail;
@@ -67,6 +73,10 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
   const [showTranslation, setShowTranslation] = useState<boolean>(() => {
     return localStorage.getItem('mq_show_trans') !== 'false';
   });
+  const [isTajwidActive, setIsTajwidActive] = useState<boolean>(() => {
+    return localStorage.getItem('mq_tajwid') !== 'false';
+  });
+  const [isTajwidLegendOpen, setIsTajwidLegendOpen] = useState<boolean>(false);
   const [showSettingsDrawer, setShowSettingsDrawer] = useState<boolean>(false);
   const [copiedAyah, setCopiedAyah] = useState<number | null>(null);
   const [targetAyahInput, setTargetAyahInput] = useState<string>('');
@@ -84,6 +94,10 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
   useEffect(() => {
     localStorage.setItem('mq_show_trans', showTranslation.toString());
   }, [showTranslation]);
+
+  useEffect(() => {
+    localStorage.setItem('mq_tajwid', isTajwidActive.toString());
+  }, [isTajwidActive]);
 
   // Scroll to requested ayah if opened from Last Read or Bookmark
   useEffect(() => {
@@ -147,6 +161,8 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
   const isPlayingThisSurahFull =
     currentlyPlayingSurah === surah.nomor && currentlyPlayingAyah === null && isPlayingAudio;
 
+  const currentJuzNumber = getJuzForAyah(surah.nomor, 1);
+
   return (
     <div className="space-y-6 max-w-4xl mx-auto">
       {/* Top sticky navigation toolbar */}
@@ -157,21 +173,46 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
             className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-stone-700 dark:text-stone-300 hover:text-emerald-700 dark:hover:text-emerald-400 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Daftar Surat</span>
+            <span>Daftar Surat / Juz</span>
           </button>
 
           <span className="text-sm font-semibold text-stone-900 dark:text-white">
             {surah.nomor}. {surah.namaLatin}
           </span>
-          <span className="hidden sm:inline text-xs text-stone-500">
-            ({surah.arti})
+          <span className="hidden sm:inline-block px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 text-xs font-medium border border-emerald-200/50 dark:border-emerald-800/50">
+            Juz {currentJuzNumber}
           </span>
         </div>
 
         {/* Action Controls cluster */}
         <div className="flex items-center gap-2">
+          {/* Tajwid Quick Toggle */}
+          <button
+            onClick={() => setIsTajwidActive(!isTajwidActive)}
+            className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium rounded-lg border transition-all ${
+              isTajwidActive
+                ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 font-semibold'
+                : 'bg-stone-100 dark:bg-stone-800 text-stone-600 dark:text-stone-400 border-stone-200 dark:border-stone-700 hover:text-stone-900 dark:hover:text-stone-200'
+            }`}
+            title={isTajwidActive ? 'Warna Tajwid Aktif' : 'Warna Tajwid Nonaktif'}
+          >
+            <Palette className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+            <span className="hidden sm:inline">Warna Tajwid:</span>
+            <span>{isTajwidActive ? 'ON' : 'OFF'}</span>
+          </button>
+
+          {/* Tajwid Legend Guide Button */}
+          <button
+            onClick={() => setIsTajwidLegendOpen(true)}
+            className="p-1.5 rounded-lg border border-stone-200 dark:border-stone-700 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
+            title="Panduan Warna Tajwid"
+            aria-label="Panduan Warna Tajwid"
+          >
+            <Sparkles className="w-4 h-4 text-amber-500" />
+          </button>
+
           {/* Jump to Ayah */}
-          <form onSubmit={handleJumpToAyah} className="flex items-center gap-1">
+          <form onSubmit={handleJumpToAyah} className="hidden sm:flex items-center gap-1">
             <input
               type="number"
               min="1"
@@ -217,8 +258,15 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
       {/* Reading Settings Drawer (expandable) */}
       {showSettingsDrawer && (
         <div className="bg-stone-50 dark:bg-stone-800/90 border border-stone-200 dark:border-stone-700 rounded-xl p-4 shadow-sm space-y-4">
-          <div className="text-xs font-semibold text-stone-700 dark:text-stone-300 uppercase tracking-wider">
-            Pengaturan Tampilan & Qari
+          <div className="text-xs font-semibold text-stone-700 dark:text-stone-300 uppercase tracking-wider flex items-center justify-between">
+            <span>Pengaturan Tampilan, Tajwid & Qari</span>
+            <button
+              onClick={() => setIsTajwidLegendOpen(true)}
+              className="text-xs font-normal text-emerald-700 dark:text-emerald-400 hover:underline flex items-center gap-1"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Buka Panduan Tajwid</span>
+            </button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
@@ -258,7 +306,17 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
             </div>
 
             {/* Toggles */}
-            <div className="flex items-center gap-4 pt-4 sm:pt-0">
+            <div className="flex flex-col gap-2.5 pt-1">
+              <label className="flex items-center gap-2 cursor-pointer text-stone-700 dark:text-stone-300">
+                <input
+                  type="checkbox"
+                  checked={isTajwidActive}
+                  onChange={(e) => setIsTajwidActive(e.target.checked)}
+                  className="rounded text-emerald-600 focus:ring-emerald-500"
+                />
+                <span className="font-semibold text-emerald-800 dark:text-emerald-300">Warna Tajwid (Berwarna)</span>
+              </label>
+
               <label className="flex items-center gap-2 cursor-pointer text-stone-700 dark:text-stone-300">
                 <input
                   type="checkbox"
@@ -286,8 +344,16 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
       {/* Surah Header Card */}
       <div className="relative overflow-hidden bg-gradient-to-br from-emerald-800 to-stone-900 text-white rounded-2xl p-6 sm:p-8 text-center shadow-lg border border-emerald-700/50">
         <div className="relative z-10 space-y-3">
-          <div className="text-xs uppercase tracking-widest text-emerald-300 font-medium">
-            Surat ke-{surah.nomor} · {surah.tempatTurun} · {surah.jumlahAyat} Ayat
+          <div className="flex items-center justify-center gap-2 text-xs uppercase tracking-widest text-emerald-300 font-medium flex-wrap">
+            <span className="px-2 py-0.5 rounded-full bg-emerald-700/60 border border-emerald-600/40 font-semibold">
+              Juz {currentJuzNumber}
+            </span>
+            <span>·</span>
+            <span>Surat ke-{surah.nomor}</span>
+            <span>·</span>
+            <span>{surah.tempatTurun}</span>
+            <span>·</span>
+            <span>{surah.jumlahAyat} Ayat</span>
           </div>
 
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
@@ -302,7 +368,7 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
             {surah.nama}
           </div>
 
-          {/* Full Surah Audio Button */}
+          {/* Full Surah Audio Button & Tajwid Indicator */}
           <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
             <button
               onClick={() => {
@@ -326,15 +392,60 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
                 </>
               )}
             </button>
+
+            <button
+              onClick={() => setIsTajwidLegendOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3 py-2 bg-stone-800/80 hover:bg-stone-700 text-stone-200 rounded-xl text-xs border border-stone-700 transition-colors"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Panduan Tajwid</span>
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Tajwid Color Legend Bar (Quick Reference) */}
+      {isTajwidActive && (
+        <div className="bg-stone-50 dark:bg-stone-800/70 border border-stone-200 dark:border-stone-700/80 rounded-2xl p-3 sm:p-4 text-xs">
+          <div className="flex items-center justify-between gap-2 mb-2.5">
+            <div className="flex items-center gap-1.5 font-semibold text-stone-800 dark:text-stone-200">
+              <Palette className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Keterangan Warna Tajwid Ayat:</span>
+            </div>
+            <button
+              onClick={() => setIsTajwidLegendOpen(true)}
+              className="text-[11px] text-emerald-700 dark:text-emerald-400 hover:underline font-medium"
+            >
+              Lihat Detail Lengkap & Rincian →
+            </button>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px]">
+            <div className="flex items-center gap-1.5 bg-white dark:bg-stone-900 p-1.5 rounded-lg border border-stone-200/60 dark:border-stone-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-red-500 shrink-0" />
+              <span className="text-red-700 dark:text-red-300 font-medium">Mad (4-6 Harakat)</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-white dark:bg-stone-900 p-1.5 rounded-lg border border-stone-200/60 dark:border-stone-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shrink-0" />
+              <span className="text-emerald-700 dark:text-emerald-300 font-medium">Ghunnah (Dengung)</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-white dark:bg-stone-900 p-1.5 rounded-lg border border-stone-200/60 dark:border-stone-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-sky-500 shrink-0" />
+              <span className="text-sky-700 dark:text-sky-300 font-medium">Qalqalah (Pantulan)</span>
+            </div>
+            <div className="flex items-center gap-1.5 bg-white dark:bg-stone-900 p-1.5 rounded-lg border border-stone-200/60 dark:border-stone-700">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 shrink-0" />
+              <span className="text-amber-700 dark:text-amber-300 font-medium">Iqlab / Waqaf</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Bismillah Header (except Surah 9 At-Taubah and Surah 1 Al-Fatihah where it's already verse 1) */}
       {surah.nomor !== 9 && surah.nomor !== 1 && (
         <div className="text-center py-6 border-b border-stone-200 dark:border-stone-800">
           <p className="font-arabic text-2xl sm:text-3xl text-stone-800 dark:text-stone-200 leading-loose" dir="rtl">
-            بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ
+            {renderTajwidColoredText('بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ', isTajwidActive)}
           </p>
           <p className="text-xs text-stone-500 dark:text-stone-400 mt-1 italic">
             Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang
@@ -429,11 +540,11 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
                     <Compass className="w-4 h-4" />
                   </button>
 
-                  {/* Tafsir modal for this ayah */}
+                  {/* Open Tafsir for this Ayah */}
                   <button
                     onClick={() => onOpenTafsir(surah.nomor, ayah.nomorAyat)}
-                    title="Baca Tafsir Ayat"
-                    className="p-1.5 hover:bg-stone-100 dark:hover:bg-stone-800 text-stone-600 dark:text-stone-300 rounded-lg transition-colors"
+                    title="Lihat Tafsir Ayat Ini"
+                    className="p-1.5 hover:bg-stone-100 dark:hover:bg-stone-800 text-amber-700 dark:text-amber-400 rounded-lg transition-colors"
                     aria-label="Tafsir Ayat"
                   >
                     <BookText className="w-4 h-4" />
@@ -465,13 +576,13 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
                 </div>
               </div>
 
-              {/* Arabic Text */}
+              {/* Arabic Text with Tajwid Colors */}
               <div className="py-5 text-right" dir="rtl">
                 <p
                   className="font-arabic text-stone-900 dark:text-white leading-loose font-normal"
                   style={{ fontSize: `${arabicFontSize}px` }}
                 >
-                  {ayah.teksArab}
+                  {renderTajwidColoredText(ayah.teksArab, isTajwidActive)}
                   <span className="inline-block mr-2 text-emerald-700 dark:text-emerald-300 font-mono text-sm opacity-90 select-none">
                     ﴿{ayah.nomorAyat}﴾
                   </span>
@@ -517,7 +628,7 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
           onClick={onBack}
           className="px-4 py-2 text-xs font-medium bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 rounded-xl hover:bg-stone-200 dark:hover:bg-stone-700 transition-colors"
         >
-          Kembali ke Daftar Surat
+          Kembali ke Daftar Surat / Juz
         </button>
 
         {surah.suratSelanjutnya ? (
@@ -535,6 +646,12 @@ export const SurahReader: React.FC<SurahReaderProps> = ({
           <div></div>
         )}
       </div>
+
+      {/* Tajwid Legend Modal */}
+      <TajwidLegendModal
+        isOpen={isTajwidLegendOpen}
+        onClose={() => setIsTajwidLegendOpen(false)}
+      />
     </div>
   );
 };
